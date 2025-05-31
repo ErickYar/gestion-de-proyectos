@@ -65,6 +65,8 @@ body {
     overflow-y:auto ;
 }
 
+
+
 .main-content{
     display: grid;
     grid-template-rows: auto 1fr;
@@ -139,10 +141,10 @@ body {
     border-left: 4px solid #667eea;
 }
 
-/* .task-card:hover{
+.task-card:hover{
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-} */
+}
 
 .task-title{
     font-weight: bold;
@@ -277,8 +279,19 @@ font-weight: bold;
     border-top: 1px solid #e2e8f0;
     display: flex;
     gap: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
 
 }
+
+/* .chat-input {
+    padding: 1rem;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+} */
 
 .chat-input input{
     flex: 1;
@@ -316,6 +329,16 @@ font-weight: bold;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
 .stat-card:hover{
     transform: translateY(-3px);
 }
@@ -345,4 +368,19 @@ font-weight: bold;
 .notification.show{
     transform: translateX(0);
 
+}
+
+@media(max-width:768px){
+    .container{
+        grid-template-columns: 1fr;
+        gap:1rem;
+    }
+    .board-columns{
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+
+    }
+    .controls{
+        flex-wrap: wrap;
+    }
 }
