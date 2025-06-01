@@ -33,5 +33,46 @@ function updateTimer(){
 
     document.getElementById('timerToggle').addEventListener('click',toggleTimer);
     
+function sendMessage(){
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages')
+            if (input.value.trim()){
+                const messageDiv=document.createElement('div');
+                messageDiv.className='message';
+                messageDiv.innerHTML=`<strong>You:</strong> ${input.value}`;
+                messages.appendChild(messageDiv);
+                messages.scrollTop=messages.scrollHeight;
+                input.value='';
+            setTimeout(()=>{
+                const responseDiv = document.createElement('div');
+                responseDiv.className ='message';
+                responseDiv.innerHTML = `<strong>System: </strong> Message received and broadcasted to team.`
+                messages.appendChild(responseDiv);
+                messages.scrollTop = messages.scrollHeight;
+            },1000)
 
+
+    }
+
+}
+
+document.getElementById('chatInput').addEventListener('keypress',(e) =>{
+    if(e.key === 'Enter'){
+        sendMessage();
+    }
+});
     
+
+
+const chatInput = document.getElementById('chatInput');
+
+chatInput.addEventListener('keydown',function(e){
+    if(e.key === 'Enter' && !e.shiftKey){
+        e.preventDefault();
+        //solo enviar si hay contenido
+
+        if(chatInput.value.trim()){
+            sendMessage();
+        }
+    }
+});

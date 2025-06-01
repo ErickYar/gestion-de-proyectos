@@ -93,6 +93,8 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+     flex-direction: row;
+    align-items: center;
 }
 
 .board-columns{
@@ -284,15 +286,6 @@ font-weight: bold;
 
 }
 
-/* .chat-input {
-    padding: 1rem;
-    border-top: 1px solid #e2e8f0;
-    display: flex;
-    gap: 0.5rem;
-    flex-direction: column;
-    align-items: flex-start;
-} */
-
 .chat-input input{
     flex: 1;
     padding: 0.5rem;
@@ -331,12 +324,14 @@ font-weight: bold;
 }
 
 .stat-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .stat-card:hover{
