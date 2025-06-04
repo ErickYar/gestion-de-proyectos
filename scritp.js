@@ -212,8 +212,75 @@ showNotification(`${template.replace('-', ' ')} template loaded`);
 }
 
 
+// report generation
+function generateReport (){
+    const totalTasks = document.querySelectorAll('.task-card').length;
+    const doneTasks = document.querySelectorAll('[data-status="done"] .task-card').length;
+    const progressTasks = document.querySelectorAll('[data-status="progress"] .task-card').length;
+    const reviewTasks = document.querySelectorAll('[data-status="review"] .task-card').length;
+
+    const report = `
+    PROJECT PRODUCTIVITY REPORT
+    ===========================
+    Date: ${new Date().toLocaleDateString()}
+    Total tasks: ${totalTasks}
+    Completed: ${doneTasks}(${Math.round(doneTasks/totalTasks*100)}%)
+    In Progress: ${progressTasks}
+    Completion Rate: ${Math.round(doneTasks/totalTasks*100)}%
+    Team Efficiency: High
+
+                `;
+                //create and dowload report
+                const blob = new Blob([report],{type:'text/plain'});
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'productivity-report.txt';
+                a.click();
+                URL.revokeObjectURL(url);
+                showNotification('Report generated and downloaded!')
+
+}
+
+function exportData(){
+    const tasks=[];
+    document.querySelectorAll('.task-card').forEach(card =>{
+        const title = card.querySelector('task-title').textContent;
+        const priority = card.querySelector('.task-title').textContent;
+        const status = card.parentElement.dataset.status;
+        tasks.push({title, priority, status});
+    });
+    const exportData = {
+        project: 'TaskFlow Demo Project',
+        exportData: new Date().toISOString(),
+        tasks:tasks,
+        stats:{
+            totalTasks:tasks.length,
+            completedTasks:tasks.filter(t => t.status === 'done').length
+
+        }
+    };
+    const blob = new Blob([JSON.stringify(exportData, null, 2)],{type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'taskflow-export.json';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    showNotification('Data exported successfully!');
+}
 
 
+
+// update statistics 
+function updateStats(){
+    const totalTasks = document.querySelectorAll('.task-card').length;
+    const completedTasks = document.querySelectorAll('[data-status="done"] .task-card').length;
+    document.getElementById('totalTasks').textContent = totalTasks;
+    document.getElementById('completedTasks').textContent = completedTasks;
+
+}
 
 
 
