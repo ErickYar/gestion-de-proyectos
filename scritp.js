@@ -101,6 +101,7 @@ document.getElementById('taskForm').addEventListener('submit',(e)=>{
 });
 
 
+
 function createTask(title, priority,dueDate,assignee ) {
     const todoColumn = document.querySelector('[data-status="todo"]');
     const taskCard = document.createElement('div');
@@ -150,7 +151,7 @@ function addDragListeners(element){
 
     });
 
-    column.addEventListener('dragleave',(e) => {
+    column.addEventListener('dragleave', (e) => {
         column.style.backgroundColor ='';
 
     });
@@ -165,7 +166,215 @@ function addDragListeners(element){
             updateStats();
         }
     })
-
-
-
  })
+
+// Template functionality 
+function loadTemplate(){
+const template = document.getElementById('projectTeTemplate').value;
+if (!template)return;
+const templates  = {
+'web-dev':[
+    {title:'setup development Environment',priority:'high'},
+    {title:'Create wireframes',priority:'medium'},
+    {title:'develop frontend components',priority:'high'},
+    {title:'setup backend Api', priority:'heigh'},
+    {title:'database design',priority:'medium'},
+    {title:'testing & QA',priority:'medium'},
+    ],
+    'marketing':[
+        {title:'market research',priority: 'high'},
+        {title:'define target audience',priority:'high'},
+        {title:'create content strategy',priority:'medium'},
+        {title:'design campaign materials',priority:'medium'},
+        {title:'launch campaign',priority:'high'},
+        {title:'analyze results',priority:'low'}
+    ],
+    'mobile-app':[
+        {title:'app concept & features',priority:'high'},
+        {title:'UI/UX Design',priority: 'hign'},
+        {title:'develop core features',priority: 'high'},
+        {title:'integrate apis',priority: 'medium'},
+        {title:'testing on devices', priority: 'medium'},
+        {title:'app store submission',priority: 'low'}
+    ]
+};
+const todoColumn = document.querySelector('[data-status="todo"]');
+
+//clear existing tasks except header
+const existingTasks = todoColumn.querySelectorAll('.taks-card');
+existingTasks.forEach(task => task.remove());
+
+//Add template tasks
+template[template].forEach(task => {
+    createTask(task.title, task.priority, '' , 'john');
+});
+showNotification(`${template.replace('-', ' ')} template loaded`);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+setTimeout(()=> {
+    showNotification('slack integration: New mesage from #development');
+    },5000);
+
+
+        // Template functionality
+//         function loadTemplate() {
+//             const template = document.getElementById('projectTemplate').value;
+//             if (!template) return;
+
+//             const templates = {
+//                 'web-dev': [
+//                     { title: 'Setup Development Environment', priority: 'high' },
+//                     { title: 'Create Wireframes', priority: 'medium' },
+//                     { title: 'Develop Frontend Components', priority: 'high' },
+//                     { title: 'Setup Backend API', priority: 'high' },
+//                     { title: 'Database Design', priority: 'medium' },
+//                     { title: 'Testing & QA', priority: 'medium' }
+//                 ],
+//                 'marketing': [
+//                     { title: 'Market Research', priority: 'high' },
+//                     { title: 'Define Target Audience', priority: 'high' },
+//                     { title: 'Create Content Strategy', priority: 'medium' },
+//                     { title: 'Design Campaign Materials', priority: 'medium' },
+//                     { title: 'Launch Campaign', priority: 'high' },
+//                     { title: 'Analyze Results', priority: 'low' }
+//                 ],
+//                 'mobile-app': [
+//                     { title: 'App Concept & Features', priority: 'high' },
+//                     { title: 'UI/UX Design', priority: 'high' },
+//                     { title: 'Develop Core Features', priority: 'high' },
+//                     { title: 'Integrate APIs', priority: 'medium' },
+//                     { title: 'Testing on Devices', priority: 'medium' },
+//                     { title: 'App Store Submission', priority: 'low' }
+//                 ]
+//             };
+
+//             const todoColumn = document.querySelector('[data-status="todo"]');
+//             // Clear existing tasks except header
+//             const existingTasks = todoColumn.querySelectorAll('.task-card');
+//             existingTasks.forEach(task => task.remove());
+
+//             // Add template tasks
+//             templates[template].forEach(task => {
+//                 createTask(task.title, task.priority, '', 'john');
+//             });
+
+//             showNotification(`${template.replace('-', ' ')} template loaded!`);
+//         }
+
+//         // Report generation
+//         function generateReport() {
+//             const totalTasks = document.querySelectorAll('.task-card').length;
+//             const doneTasks = document.querySelectorAll('[data-status="done"] .task-card').length;
+//             const progressTasks = document.querySelectorAll('[data-status="progress"] .task-card').length;
+//             const reviewTasks = document.querySelectorAll('[data-status="review"] .task-card').length;
+            
+//             const report = `
+// PROJECT PRODUCTIVITY REPORT
+// ===========================
+// Date: ${new Date().toLocaleDateString()}
+// Total Tasks: ${totalTasks}
+// Completed: ${doneTasks} (${Math.round(doneTasks/totalTasks*100)}%)
+// In Progress: ${progressTasks}
+// In Review: ${reviewTasks}
+// Completion Rate: ${Math.round(doneTasks/totalTasks*100)}%
+// Team Efficiency: High
+//             `;
+            
+//             // Create and download report
+//             const blob = new Blob([report], { type: 'text/plain' });
+//             const url = URL.createObjectURL(blob);
+//             const a = document.createElement('a');
+//             a.href = url;
+//             a.download = 'productivity-report.txt';
+//             a.click();
+//             URL.revokeObjectURL(url);
+            
+//             showNotification('Report generated and downloaded!');
+//         }
+
+//         // Export functionality
+//         function exportData() {
+//             const tasks = [];
+//             document.querySelectorAll('.task-card').forEach(card => {
+//                 const title = card.querySelector('.task-title').textContent;
+//                 const priority = card.querySelector('.priority').textContent;
+//                 const status = card.parentElement.dataset.status;
+//                 tasks.push({ title, priority, status });
+//             });
+            
+//             const exportData = {
+//                 project: 'TaskFlow Demo Project',
+//                 exportDate: new Date().toISOString(),
+//                 tasks: tasks,
+//                 stats: {
+//                     totalTasks: tasks.length,
+//                     completedTasks: tasks.filter(t => t.status === 'done').length
+//                 }
+//             };
+            
+//             const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+//             const url = URL.createObjectURL(blob);
+//             const a = document.createElement('a');
+//             a.href = url;
+//             a.download = 'taskflow-export.json';
+//             a.click();
+//             URL.revokeObjectURL(url);
+            
+//             showNotification('Data exported successfully!');
+//         }
+
+//         // Update statistics
+//         function updateStats() {
+//             const totalTasks = document.querySelectorAll('.task-card').length;
+//             const completedTasks = document.querySelectorAll('[data-status="done"] .task-card').length;
+            
+//             document.getElementById('totalTasks').textContent = totalTasks;
+//             document.getElementById('completedTasks').textContent = completedTasks;
+//         }
+
+//         // Notification system
+//         function showNotification(message) {
+//             const notification = document.getElementById('notification');
+//             notification.textContent = message;
+//             notification.classList.add('show');
+            
+//             setTimeout(() => {
+//                 notification.classList.remove('show');
+//             }, 3000);
+//         }
+
+//         // Close modal when clicking outside
+//         window.addEventListener('click', (e) => {
+//             const modal = document.getElementById('taskModal');
+//             if (e.target === modal) {
+//                 closeTaskModal();
+//             }
+//         });
+
+//         // Simulate real-time updates
+//         setInterval(() => {
+//             const onlineUsers = Math.floor(Math.random() * 5) + 1;
+//             document.getElementById('onlineUsers').textContent = `(${onlineUsers} online)`;
+//         }, 10000);
+
+//         // Initialize
+//         updateStats();
+        
+//         // Simulate Slack integration notification
+//         setTimeout(() => {
+//             showNotification('Slack integration: New message from #development');
+//         }, 5000);
